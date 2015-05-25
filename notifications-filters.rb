@@ -13,143 +13,158 @@ end
 fs = GmailBritta.filterset(:me => MY_EMAILS) do
 
   filter {
+    archive
     twitter_emails = %w{
       postmaster.twitter.com
       notify@twitter.com
       info@twitter.com
     }
     has [{:or => "from:(#{twitter_emails.join("|")})"}]
-    label 'deletable/twitter'
+    label '.notif/twitter'
+  }.also {
+    label '.notif'
   }
   filter {
+    has ['from:okcupid -subject:("This week\'s top matches"|"New matches") ']
+    label '.notif/okcupid'
+  }.also {
+    label '.notif'
+  }
+  filter {
+    has ['list:"github.com"']
+    label '.notif/github'
+  }.also {
+    label '.notif'
+  }
+  filter {
+    has ['from:no-reply@accounts.google.com']
+    label '.notif/google'
+    star
+  }.also {
+    label '.notif'
+  }
+  filter {
+    has ['list:"postmates.com"']
+    label '.notif/postmates'
+  }.also {
+    label '.notif'
+  }
+  filter {
+    has ['from:ifttt.com']
+    label '.notif/ifttt'
+    archive
+  }.also {
+    label '.notif'
+  }
+  filter {
+    has ['from:(coffeemeetsbagel.com) ']
+    label '.notif/coffee-bagel'
+  }.also {
+    label '.notif'
+  }
+  filter {
+    archive
     has %w{from:facebookmail.com}
-    label 'deletable/facebook-linkedin'
+    label '.notif/facebook'
+  }.also {
+    label '.notif'
   }
   filter {
+    archive
     linkedin_emails = %w{
       linkedin.com
       em.linkedin.com
       e.linkedin.com
     }
     has [{:or => "from:(#{linkedin_emails.join("|")})"}]
-    label 'deletable/facebook-linkedin'
+    label '.notif/linkedin'
+  }.also {
+    label '.notif'
   }
   filter {
-    has %w{from:wordpress.com}
-    label 'deletable/wordpress'
-  }
-  filter {
-    has %w{from:tumblr.com}
-    label 'deletable/other-social'
-  }
-  filter {
-    has %w{from:fitbit.com}
-    label 'deletable/other-social'
-  }
-  filter {
-    has %w{from:yammer.com}
-    label 'deletable/other-social'
-  }
-  filter {
+    archive
     has %w{from:foursquare.com}
-    label 'deletable/other-social'
+    label '.notif/foursquare'
+  }.also {
+    label '.notif'
   }
   filter {
-    has %w{from:untappd.com}
-    label 'deletable/other-social'
-  }
-  #chromaroma
-  filter {
-    has %w{from:slidesharemail.com}
-    label 'deletable/other-social'
-  }
-  filter {
-    has %w{from:flickr.com}
-    label 'deletable/other-social'
-  }
-  filter {
-    has %w{from:toby.barnes@wearemudlark.com "Chromaroma"}
-    label 'deletable/other-social'
-  }
-  filter {
-    has %w{from:alerts@lanyrd.com}
-    label 'deletable/other-social'
-  }
-  filter {
-    has %w{"added you on Google+"}
-    label 'deletable/other-social'
-  }
-  filter {
+    archive
     has %w{from:auto-message@eventbrite.com}
-    label 'deletable/other-social'
+    label '.notif/eventbrite'
+  }.also {
+    label '.notif'
   }
   filter {
+    archive
     has %w{from:calendar-notification@google.com}
-    label 'deletable/calendar'
+    label '.notif/calendar'
   }
+  # filter {
+  #   archive
+  #   has %w{"Invitation from Google Calendar"}
+  #   label '.notif/calendar'
+  # }
+  # filter {
+  #   archive
+  #   has %w{subject:"Updated Invitation"}
+  #   label '.notif/calendar'
+  # }
+  # filter {
+  #   archive
+  #   has %w{filename:invite.ics}
+  #   label '.notif/calendar'
+  # }.also {
+  #   label '.notif'
+  # }
   filter {
-    has %w{"Invitation from Google Calendar"}
-    label 'deletable/calendar'
-  }
-  filter {
-    has %w{subject:"Updated Invitation"}
-    label 'deletable/calendar'
-  }
-  filter {
-    has %w{filename:invite.ics}
-    label 'deletable/calendar'
-  }
-  filter {
-    has %w{from:today@sunrise.im}
-    label 'deletable/sunrise'
-  }
-  filter {
-    has %w{from:paypal@e.paypal.co.uk}
-    label 'deletable/other-notifications'
-  }
-  filter {
-    has %w{from:gis@monmouthshire.gov.uk}
-    label 'deletable/other-notifications'
-  }
-  filter {
-    has %w{from:updates.hungryhouse.co.uk}
-    label 'deletable/other-notifications'
-  }
-  filter {
-    has %w{from:info.tfl.gov.uk}
-    label 'deletable/other-notifications'
-  }
-  filter {
+    archive
     has %w{from:newrelic.com}
-    label 'deletable/other-notifications'
+    label '.notif/newrelic'
+  }.also {
+    label '.notif'
   }
   filter {
+    archive
     has %w{from:dropbox.com}
-    label 'deletable/other-notifications'
+    label '.notif/dropbox'
+  }.also {
+    label '.notif'
   }
   filter {
+    archive
     has %w{from:trello.com}
-    label 'deletable/other-notifications'
+    label '.notif/trello'
+  }.also {
+    label '.notif'
   }
   filter {
+    archive
     has %w{subject:"Change Request" from:nobody@google.com}
-    label 'deletable/other-notifications'
+    label '.notif/google'
+  }.also {
+    label '.notif'
   }
   filter {
+    archive
     has %w{from:noreply@insideicloud.icloud.com}
-    label 'deletable/other-notifications'
+    label '.notif/apple'
+  }.also {
+    label '.notif'
   }
   filter {
-    has %w{from:nominet@nominet.org.uk}
-    label 'deletable/other-notifications'
-  }
-  filter {
+    archive
     has %w{from:info@meetup.com}
-    label 'deletable/other-social'
+    label '.notif/meetup'
+  }.also {
+    label '.notif'
   }
   filter {
+    archive
     has %w{from:alert@pingdom.com}
-    label 'deletable/alert'
+    label '.alerts/pingdom'
+  }.also {
+    label '.alerts'
   }
 
 
