@@ -1,16 +1,4 @@
-#!/bin/env ruby
-
-require 'rubygems'
-require 'gmail-britta'
-
-if File.exist?(File.expand_path("~/.my-email-addresses.rb"))
-  require "~/.my-email-addresses.rb"
-else
-  # Some fake constants to let you run this (-:
-  MY_EMAILS = %w[test@example.com test.tester@example.com]
-end
-
-phrases = [
+FilterConfig.add_phrases([
   '"to view this email as a web page, go here."',
   '"having trouble reading this email"',
   '"having trouble viewing this email"',
@@ -78,21 +66,4 @@ phrases = [
   '"block the sender"',
   '"report this message"',
   '"You\'re receiving this e-mail because you\'ve signed up for"',
-]
-
-MY_EMAILS.each do |e|
-  phrases <<   "\"this message was sent to #{e}\""
-end
-fs = GmailBritta.filterset(:me => MY_EMAILS) do
-  phrases.each_slice(5) do |phrase_group|
-    filter {
-      has [{:or => phrase_group}]
-
-      archive
-      label '.unsub'
-      mark_unimportant
-    }
-  end
-end
-
-puts fs.generate
+])
