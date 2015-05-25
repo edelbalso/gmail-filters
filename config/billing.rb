@@ -17,6 +17,7 @@ FilterConfig.add('.rcpt', [
 
   # Shopping
   { :label => 'shop', :has => ['from:(orders@instacart.com)'] }.merge(defaults),
+  { :label => 'shop', :has => ['from:(moveloot.com) subject:(purchase)'] }.merge(defaults),
 
   # Transportation
   { :label => 'transport', :has => ['from:(@scootnetworks.com) subject:("receipt")'] }.merge(defaults),
@@ -45,7 +46,8 @@ FilterConfig.add('.rcpt', [
   # Misc
   { :label => 'misc',      :has => [{:or => "from:(#{apple_emails.join("|")})"}, 'subject:(receipt)'] }.merge(defaults),
   { :label => 'misc',      :has => ['from:(service@paypal.com) subject:(Your payment)'] }.merge(defaults),
-  { :label => 'misc',      :has => ['@google.com subject:(receipt)'] }.merge(defaults),
+  { :label => 'misc',      :has => ['from(@google.com) subject:(receipt)'] }.merge(defaults),
+  { :label => 'misc',      :has => ['from:(venmo@venmo.com) +subject:(paid|completed)'] }.merge(defaults),
 
 ])
 
